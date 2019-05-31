@@ -1656,7 +1656,7 @@ static gboolean gst_dvbaudiosink_stop(GstBaseSink * basesink)
 		ioctl(self->fd, AUDIO_SELECT_SOURCE, AUDIO_SOURCE_DEMUX);
 		if (ioctl(self->fd, AUDIO_CLEAR_BUFFER) >= 0)
 			GST_INFO_OBJECT(self, "STOP AUDIO BUFFER FLUSHED");
-#if defined(AZBOX1) || defined(AZBOXHD)
+#if defined(AZBOX) || defined(AZBOXHD)
 		self->rate = 1.0;
 #endif
 		close(self->fd);
@@ -1757,7 +1757,7 @@ static GstStateChangeReturn gst_dvbaudiosink_change_state(GstElement *element, G
 		if (self->fd >= 0)
 		{
 			ioctl(self->fd, AUDIO_SELECT_SOURCE, AUDIO_SOURCE_MEMORY);
-#if defined(AZBOX1)
+#if defined(AZBOX)
 			ioctl(self->fd, AUDIO_RESET_STC); //Openazbox: AUDIO_RESET_STC
 #else
 			ioctl(self->fd, AUDIO_PAUSE); // used for AzboxHD in HDMU
@@ -1796,7 +1796,7 @@ static GstStateChangeReturn gst_dvbaudiosink_change_state(GstElement *element, G
 #endif
 		if (self->fd >= 0)
 		{
-#if defined(AZBOX1)
+#if defined(AZBOX)
 			ioctl(self->fd, AUDIO_STC_PLAY); //openazbox
 #else
 			ioctl(self->fd, AUDIO_CONTINUE); // used for AzboxHD in HDMU
@@ -1818,7 +1818,7 @@ static GstStateChangeReturn gst_dvbaudiosink_change_state(GstElement *element, G
 		self->paused = TRUE;
 		if (self->fd >= 0)
 		{
-#if defined(AZBOX1)
+#if defined(AZBOX)
 			ioctl(self->fd, AUDIO_STC_STOP); //Openazbox: AUDIO_STC_STOP
 #else
 			ioctl(self->fd, AUDIO_PAUSE); // used for AzboxHD in HDMU

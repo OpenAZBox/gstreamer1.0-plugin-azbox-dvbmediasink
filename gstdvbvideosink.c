@@ -1357,7 +1357,7 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
 					const char *profile_str[] = { "baseline", "main", "extended", "high" };
 					memcpy(tmp, "\x00\x00\x00\x01", 4);
 					tmp_len += 4;
-#if defined(AZBOX1) || defined(AZBOXHD1)
+#if defined(AZBOX) || defined(AZBOXHD1)
 					memcpy(tmp + tmp_len, data + 8, len);
 #else
 					memcpy(tmp + tmp_len, data + 8, len);
@@ -1687,7 +1687,7 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
 					gst_buffer_map(gst_value_get_buffer(codec_data), &codecdatamap, GST_MAP_READ);
 					codec_data_pointer = codecdatamap.data;
 					codec_size = codecdatamap.size;
-#if defined(AZBOX1) || defined(DAGS)
+#if defined(AZBOX) || defined(DAGS)
 					GstMapInfo map;
 					self->codec_data = gst_buffer_new_and_alloc(8 + codec_size);
 					gst_buffer_map(self->codec_data, &map, GST_MAP_WRITE);
@@ -1695,7 +1695,7 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
 					data += 8;
 					GST_DEBUG_OBJECT(self, "before memcopy");
 					if (codec_data && codec_size) memcpy(data , codec_data_pointer, codec_size);
-#elif defined(AZBOX1) || defined(AZBOXHD)
+#elif defined(AZBOX) || defined(AZBOXHD)
 					//self->codec_data = gst_buffer_new_and_alloc(codec_size);
 					memcpy(data, codec_data_pointer, codec_size);
 					//gint codec_size = GST_BUFFER_SIZE(gst_value_get_buffer(codec_data));
@@ -1714,7 +1714,7 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
 #endif
 					GST_DEBUG_OBJECT(self, "before unmap");
 					gst_buffer_unmap(gst_value_get_buffer(codec_data), &codecdatamap);
-#if defined(AZBOX1) || defined(DAGS)
+#if defined(AZBOX) || defined(DAGS)
 					gst_buffer_unmap(self->codec_data, &map);
 #endif
 				}
