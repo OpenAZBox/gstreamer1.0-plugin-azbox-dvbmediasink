@@ -137,7 +137,6 @@ if test "$have_h265" = "yes"; then
 	AC_DEFINE([HAVE_H265],[1],[Define to 1 for h265 support])
 fi
 
-
 AC_ARG_WITH(h264,
 	AS_HELP_STRING([--with-h264],[support h264, yes or no]),
 	[have_h264=$withval],[have_h264=yes])
@@ -215,6 +214,11 @@ if test "$have_pcm" = "yes"; then
 	AC_DEFINE([HAVE_PCM],[1],[Define to 1 for PCM support])
 fi
 
+#AC_ARG_WITH(maxpcmrate,
+#	AS_HELP_STRING([--with-maxpcmrate],[Max PCM rate, default is 48000]),
+#	[have_maxpcmrate=$withval],[have_maxpcmrate=48000])
+#AC_DEFINE_UNQUOTED([MAX_PCM_RATE],["$have_maxpcmrate"],[Max PCM rate])
+
 AC_ARG_WITH(eac3,
 	AS_HELP_STRING([--with-eac3],[support E-AC3 / AC3+ / DDP, yes or no]),
 	[have_eac3=$withval],[have_eac3=no])
@@ -243,24 +247,19 @@ if test "$dags" = "yes"; then
 	AC_DEFINE([DAGS],[1],[build for dags, yes or no ])
 fi
 
-AC_ARG_WITH(machine,
-	AS_HELP_STRING([--with-machine],[build for machine, $withval]),
-	[machine=$withval],[machine=generic])
-AC_SUBST(machine)
-AC_DEFINE_UNQUOTED(machine,"$machine",[machine])
-if test `echo "$machine" | cut -b 1-2` == "dm"; then
-	AC_DEFINE([DREAMBOX],[1],[build for DREAMBOX ])
-fi
-if test `echo "$machine" | cut -b 1-2` == "vu"; then
-	AC_DEFINE([VUPLUS],[1],[build for VUPLUS ])
-	AC_DEFINE([TYPE2],[1],[build bybass TYPE2])
-fi
-if [ test "$machine" = "xc7362" || test "$machine" = "xc7346" ]; then
-	AC_DEFINE([TYPE2],[1],[build bybass TYPE2])
-fi
-if [ test "$machine" == "azboxme" || test "$machine" == "azboxminime" ]; then
+AC_ARG_WITH(boxtype,
+	AS_HELP_STRING([--with-boxtype],[build for BOXTYPE, $withval]),
+	[BOXTYPE=$withval],[BOXTYPE=dm800])
+AC_SUBST(BOXTYPE)
+AC_DEFINE_UNQUOTED(BOXTYPE,"$BOXTYPE",[box type])
+
+if test "$BOXTYPE" == "azboxme" -o "$BOXTYPE" == "azboxminime"; then
 	AC_DEFINE([AZBOX],[1],[build for AZBOX ME/ miniME ])
 fi
+
+#if test "$BOXTYPE" == "azboxhd"; then
+#	AC_DEFINE([AZBOXHD],[1],[build for AZBOX HD ])
+#fi
 
 DTS_LIBS="-ldca $LIBM"
 AC_SUBST(DTS_LIBS)
