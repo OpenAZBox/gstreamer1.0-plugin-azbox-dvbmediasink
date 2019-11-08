@@ -253,6 +253,12 @@ AC_ARG_WITH(boxtype,
 AC_SUBST(BOXTYPE)
 AC_DEFINE_UNQUOTED(BOXTYPE,"$BOXTYPE",[box type])
 
+AC_ARG_WITH(boxbrand,
+	AS_HELP_STRING([--with-boxbrand],[build for BOXBRAND, $withval]),
+	[BOXBRAND="$withval"],[BOXBRAND="dreambox"])
+AC_SUBST(BOXBRAND)
+AC_DEFINE_UNQUOTED(BOXBRAND,"$BOXBRAND",[box brand])
+
 if test "$BOXTYPE" == "azboxme" -o "$BOXTYPE" == "azboxminime"; then
 	AC_DEFINE([AZBOX],[1],[build for AZBOX ME/ miniME ])
 fi
