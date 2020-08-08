@@ -249,7 +249,7 @@ fi
 
 AC_ARG_WITH(boxtype,
 	AS_HELP_STRING([--with-boxtype],[build for BOXTYPE, $withval]),
-	[BOXTYPE=$withval],[BOXTYPE=""])
+	[BOXTYPE="$withval"],[BOXTYPE=""])
 AC_SUBST(BOXTYPE)
 AC_DEFINE_UNQUOTED(BOXTYPE,"$BOXTYPE",[box type])
 
